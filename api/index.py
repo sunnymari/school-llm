@@ -1,15 +1,10 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
-from typing import List, Optional
+from fastapi.responses import JSONResponse
 
 app = FastAPI(title="Math Assessment System", version="1.0.0")
 
-# Sample data for demonstration
-SAMPLE_STUDENTS = [
-    "Alice", "Bob", "Charlie", "Diana", "Eve", 
-    "Frank", "Grace", "Henry", "Ivy", "Jack"
-]
+# Sample data
+SAMPLE_STUDENTS = ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Henry", "Ivy", "Jack"]
 
 SAMPLE_MASTERY = {
     "Alice": {"Counting": 85, "Number Recognition": 90, "Overall": 87.5},
@@ -26,18 +21,26 @@ SAMPLE_MASTERY = {
 
 @app.get("/")
 async def root():
-    return {"message": "Math Assessment System is running!", "students": SAMPLE_STUDENTS}
+    return {
+        "message": "Math Assessment System is running!",
+        "students": SAMPLE_STUDENTS,
+        "endpoints": {
+            "students": "/students",
+            "health": "/health",
+            "student_mastery": "/students/{name}/mastery"
+        }
+    }
 
 @app.get("/health")
-async def health_check():
-    return {"status": "healthy", "message": "Math Assessment System is running"}
+async def health():
+    return {"status": "healthy", "message": "System is running"}
 
 @app.get("/students")
-async def list_students():
+async def get_students():
     return {"students": SAMPLE_STUDENTS}
 
 @app.get("/students/{student_name}/mastery")
-async def get_mastery(student_name: str):
+async def get_student_mastery(student_name: str):
     if student_name not in SAMPLE_MASTERY:
         raise HTTPException(status_code=404, detail="Student not found")
     
@@ -51,5 +54,5 @@ async def get_mastery(student_name: str):
         "overall_mastery": mastery_data["Overall"]
     }
 
-# This is the entry point for Vercel
+# Vercel handler
 handler = app
