@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "new_interface.html",
+      "src": "three_panel_interface.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/new_interface.html"
+      "dest": "/three_panel_interface.html"
     }
   ]
 }

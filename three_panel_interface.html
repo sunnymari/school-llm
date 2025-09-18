@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Assessment System - Three Panel Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 1400px;
+            margin: 0 auto;
+            height: calc(100vh - 2rem);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .three-panels {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            flex: 1;
+            min-height: 0;
+        }
+        
+        .panel {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .panel-title {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Panel 1: Student Data */
+        .student-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        
+        .student-item {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .student-item:hover {
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+        
+        .student-item.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .student-name {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+        
+        .student-score {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        /* Panel 2: Performance Analysis */
+        .performance-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        
+        .performance-details {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .performance-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .performance-label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .performance-value {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .insight-box {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        .insight-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .insight-text {
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* Panel 3: Chat Box */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            max-height: 300px;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 12px;
+            max-width: 85%;
+            word-wrap: break-word;
+        }
+        
+        .message.user {
+            background: #667eea;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+        
+        .message.ai {
+            background: #e9ecef;
+            color: #333;
+            margin-right: auto;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .chat-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .chat-input button {
+            padding: 0.75rem 1.25rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .chat-input button:hover {
+            background: #5a67d8;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+            font-style: italic;
+        }
+        
+        .status {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            color: #155724;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 1200px) {
+            .three-panels {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .container {
+                height: auto;
+                min-height: calc(100vh - 2rem);
+            }
+            
+            .panel {
+                min-height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .three-panels {
+                gap: 0.75rem;
+            }
+            
+            .panel {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧮 Math Assessment System</h1>
+        <p class="subtitle">Three-Panel Interface: Student Data • Performance Analysis • AI Chat</p>
+        
+        <div class="three-panels">
+            <!-- Panel 1: Student Data -->
+            <div class="panel">
+                <h3 class="panel-title">📊 Student Data</h3>
+                <div class="student-list" id="studentList">
+                    <!-- Students will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Panel 2: Performance Analysis -->
+            <div class="panel">
+                <h3 class="panel-title">📈 Performance Analysis</h3>
+                <div class="performance-content" id="performanceContent">
+                    <div class="empty-state">
+                        Select a student from the left panel to view their performance analysis
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Panel 3: Chat Box -->
+            <div class="panel">
+                <h3 class="panel-title">💬 AI Intervention Chat</h3>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message ai">
+                            👋 Hi! I'm your AI assistant for student interventions. Ask me about any student's performance or request specific intervention strategies.
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Ask about student interventions..." onkeypress="handleKeyPress(event)">
+                        <button onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status">
+            ✅ Three-Panel Interface: Math Assessment System with real student data deployed successfully!
+        </div>
+    </div>
+    
+    <script>
+        // Real student data from your assessment
+        const studentData = {
+            "Kritah": {"Q1_8cubes": 1, "Q2_6cubes": 0, "Q3_morecubes": 1, "Total": 2, "Percentage": 67},
+            "Naadira McKay": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
+            "Ava": {"Q1_8cubes": 0, "Q2_6cubes": 0, "Q3_morecubes": 0, "Total": 0, "Percentage": 0},
+            "Goodnews": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 0, "Total": 2, "Percentage": 67},
+            "Dainul": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
+            "Bonita Myers": {"Q1_8cubes": 1, "Q2_6cubes": 0, "Q3_morecubes": 1, "Total": 2, "Percentage": 67},
+            "Melodi Myers": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
+            "Lulu": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 0, "Total": 2, "Percentage": 67},
+            "August": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
+            "Mehtun Nissa": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100}
+        };
+        
+        let selectedStudent = null;
+        
+        function populateStudentList() {
+            const studentList = document.getElementById('studentList');
+            studentList.innerHTML = '';
+            
+            Object.keys(studentData).forEach(name => {
+                const student = studentData[name];
+                const item = document.createElement('div');
+                item.className = 'student-item';
+                item.onclick = () => selectStudent(name);
+                
+                const performanceLevel = student.Percentage >= 80 ? '🎉' : 
+                                       student.Percentage >= 60 ? '👍' : '📚';
+                
+                item.innerHTML = `
+                    <div class="student-name">${name}</div>
+                    <div class="student-score">${performanceLevel} ${student.Percentage}% (${student.Total}/3)</div>
+                `;
+                
+                studentList.appendChild(item);
+            });
+        }
+        
+        function selectStudent(name) {
+            selectedStudent = name;
+            updateStudentSelection();
+            showPerformanceAnalysis(name);
+        }
+        
+        function updateStudentSelection() {
+            document.querySelectorAll('.student-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            if (selectedStudent) {
+                const items = document.querySelectorAll('.student-item');
+                Object.keys(studentData).forEach((name, index) => {
+                    if (name === selectedStudent) {
+                        items[index].classList.add('selected');
+                    }
+                });
+            }
+        }
+        
+        function showPerformanceAnalysis(name) {
+            const student = studentData[name];
+            const content = document.getElementById('performanceContent');
+            
+            const performanceLevel = student.Percentage >= 80 ? 'Excellent' : 
+                                   student.Percentage >= 60 ? 'Good Progress' : 'Needs Support';
+            
+            const statusEmoji = student.Percentage >= 80 ? '🎉' : 
+                               student.Percentage >= 60 ? '👍' : '📚';
+            
+            content.innerHTML = `
+                <div class="performance-details">
+                    <h4 style="margin-bottom: 1rem; color: #333;">📊 ${name}'s Detailed Performance</h4>
+                    
+                    <div class="performance-item">
+                        <span class="performance-label">8 Cubes Question:</span>
+                        <span class="performance-value">${student.Q1_8cubes ? '✅ Correct' : '❌ Incorrect'}</span>
+                    </div>
+                    
+                    <div class="performance-item">
+                        <span class="performance-label">6 Cubes Question:</span>
+                        <span class="performance-value">${student.Q2_6cubes ? '✅ Correct' : '❌ Incorrect'}</span>
+                    </div>
+                    
+                    <div class="performance-item">
+                        <span class="performance-label">More Cubes Question:</span>
+                        <span class="performance-value">${student.Q3_morecubes ? '✅ Correct' : '❌ Incorrect'}</span>
+                    </div>
+                    
+                    <div class="performance-item" style="background: #667eea; color: white;">
+                        <span class="performance-label" style="color: white;">Total Score:</span>
+                        <span class="performance-value" style="color: white;">${student.Total}/3 (${student.Percentage}%)</span>
+                    </div>
+                    
+                    <div class="performance-item" style="background: #667eea; color: white;">
+                        <span class="performance-label" style="color: white;">Mastery Level:</span>
+                        <span class="performance-value" style="color: white;">${statusEmoji} ${performanceLevel}</span>
+                    </div>
+                </div>
+                
+                <div class="insight-box">
+                    <div class="insight-title">💡 Quick Insight</div>
+                    <div class="insight-text">${getQuickInsight(name, student)}</div>
+                </div>
+                
+                <div class="insight-box">
+                    <div class="insight-title">🎯 Recommended Focus Areas</div>
+                    <div class="insight-text">${getFocusAreas(name, student)}</div>
+                </div>
+            `;
+        }
+        
+        function getQuickInsight(name, student) {
+            if (student.Percentage === 100) {
+                return `${name} has mastered all counting concepts and is ready for advanced activities like skip counting and basic addition/subtraction.`;
+            } else if (student.Percentage >= 60) {
+                return `${name} is making good progress with counting skills. Focus on the specific areas where they missed points to achieve full mastery.`;
+            } else {
+                return `${name} needs additional support with fundamental counting skills. Consider targeted interventions and hands-on practice.`;
+            }
+        }
+        
+        function getFocusAreas(name, student) {
+            const areas = [];
+            
+            if (!student.Q1_8cubes) {
+                areas.push("• Practice counting to 8 using manipulatives");
+            }
+            if (!student.Q2_6cubes) {
+                areas.push("• Practice counting to 6 with visual aids");
+            }
+            if (!student.Q3_morecubes) {
+                areas.push("• Practice comparing quantities (more/less)");
+            }
+            
+            if (areas.length === 0) {
+                return "• Ready for advanced counting activities\n• Introduce skip counting by 2s, 5s, 10s\n• Practice addition and subtraction with manipulatives";
+            }
+            
+            return areas.join('\n');
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Generate AI response
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addMessage(response, 'ai');
+            }, 1000);
+        }
+        
+        function addMessage(text, sender) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        function generateAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            // Check if asking about a specific student
+            for (const [name, data] of Object.entries(studentData)) {
+                if (message.includes(name.toLowerCase())) {
+                    return generateStudentSpecificResponse(name, data, message);
+                }
+            }
+            
+            // General responses
+            if (message.includes('intervention') || message.includes('help') || message.includes('support')) {
+                return "I can help with intervention strategies! Ask about a specific student (like 'How can I help Ava?') or ask about general counting interventions.";
+            }
+            
+            if (message.includes('counting') || message.includes('cubes')) {
+                return "For counting skills, I recommend: 1) Hands-on manipulatives, 2) Visual counting games, 3) One-to-one correspondence practice. Which student would you like specific strategies for?";
+            }
+            
+            if (message.includes('performance') || message.includes('score')) {
+                return "I can analyze any student's performance! Select a student from the left panel to see their details, or ask me about a specific student by name.";
+            }
+            
+            return "I'm here to help with student interventions! Try asking about a specific student (like 'What does Ava need?') or ask about counting strategies.";
+        }
+        
+        function generateStudentSpecificResponse(name, data, message) {
+            if (data.Percentage === 100) {
+                return `${name} is excelling! They've mastered all counting concepts. Consider advanced activities like skip counting, addition/subtraction with manipulatives, or counting by 2s, 5s, and 10s.`;
+            } else if (data.Percentage >= 60) {
+                const missed = [];
+                if (!data.Q1_8cubes) missed.push('counting to 8');
+                if (!data.Q2_6cubes) missed.push('counting to 6');
+                if (!data.Q3_morecubes) missed.push('comparing quantities');
+                
+                return `${name} is doing well overall! Focus on: ${missed.join(', ')}. Use visual aids and hands-on practice for these specific skills.`;
+            } else {
+                return `${name} needs intensive support. Start with basic counting 1-10 using fingers, objects, and visual aids. Practice one-to-one correspondence daily. Consider small group or one-on-one intervention sessions.`;
+            }
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateStudentList();
+            console.log('Three-Panel Math Assessment System loaded successfully!');
+        });
+    </script>
+</body>
+</html>
