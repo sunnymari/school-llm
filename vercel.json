@@ -18,10 +18,5 @@
   ],
   "env": {
     "OPENAI_API_KEY": "@openai_api_key"
-  },
-  "functions": {
-    "main.py": {
-      "maxDuration": 30
-    }
   }
 }
