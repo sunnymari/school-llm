@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Assessment Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .app-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-color: #4facfe;
+        }
+        
+        .app-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .app-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .app-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .app-button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .app-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        .status {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .status h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            color: #856404;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 LLM Assessment Dashboard</h1>
+            <p>AI-powered educational assessment and intervention platform</p>
+        </div>
+        
+        <div class="content">
+            <div class="status">
+                <h3>🚀 System Status</h3>
+                <p>All interfaces are ready to use! Choose your preferred method below.</p>
+            </div>
+            
+            <div class="instructions">
+                <h3>📋 Quick Start Instructions</h3>
+                <ol>
+                    <li><strong>Load Data:</strong> Run <code>python scripts/load_sample_data.py</code></li>
+                    <li><strong>Build Index:</strong> Run <code>python scripts/build_index.py</code></li>
+                    <li><strong>Start API:</strong> Run <code>uvicorn app.main:app --reload --port 8000</code></li>
+                    <li><strong>Choose Interface:</strong> Use any of the options below</li>
+                </ol>
+            </div>
+            
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-icon">📊</div>
+                    <div class="app-title">Streamlit Dashboard</div>
+                    <div class="app-description">
+                        Upload CSV files, analyze student mastery, and get AI-powered insights with an intuitive web interface.
+                    </div>
+                    <a href="http://localhost:8501" class="app-button" target="_blank">
+                        Launch Streamlit
+                    </a>
+                </div>
+                
+                <div class="app-card">
+                    <div class="app-icon">📋</div>
+                    <div class="app-title">Google Sheets Integration</div>
+                    <div class="app-description">
+                        Connect with Google Sheets for easy data entry and sharing. Perfect for collaborative teaching teams.
+                    </div>
+                    <a href="http://localhost:8502" class="app-button" target="_blank">
+                        Launch Sheets App
+                    </a>
+                </div>
+                
+                <div class="app-card">
+                    <div class="app-icon">🎓</div>
+                    <div class="app-title">LTI Canvas Integration</div>
+                    <div class="app-description">
+                        Embed the assessment tool directly in Canvas or Google Classroom for seamless student access.
+                    </div>
+                    <a href="http://localhost:8503" class="app-button" target="_blank">
+                        Launch LTI App
+                    </a>
+                </div>
+                
+                <div class="app-card">
+                    <div class="app-icon">🔧</div>
+                    <div class="app-title">API Documentation</div>
+                    <div class="app-description">
+                        Explore the REST API endpoints and integrate with your own applications or systems.
+                    </div>
+                    <a href="http://localhost:8000/docs" class="app-button" target="_blank">
+                        View API Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>LLM Assessment Platform | Built with FastAPI, Streamlit, and OpenAI</p>
+        </div>
+    </div>
+</body>
+</html>
