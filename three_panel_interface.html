@@ -329,23 +329,23 @@
         </div>
         
         <div class="status">
-            ✅ Three-Panel Interface: Math Assessment System with real student data deployed successfully!
+            ✅ Three-Panel Interface: Math Assessment System with privacy-protected student data deployed successfully!
         </div>
     </div>
     
     <script>
-        // Real student data from your assessment
+        // Student data with privacy-friendly names
         const studentData = {
-            "Kritah": {"Q1_8cubes": 1, "Q2_6cubes": 0, "Q3_morecubes": 1, "Total": 2, "Percentage": 67},
-            "Naadira McKay": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
-            "Ava": {"Q1_8cubes": 0, "Q2_6cubes": 0, "Q3_morecubes": 0, "Total": 0, "Percentage": 0},
-            "Goodnews": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 0, "Total": 2, "Percentage": 67},
-            "Dainul": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
-            "Bonita Myers": {"Q1_8cubes": 1, "Q2_6cubes": 0, "Q3_morecubes": 1, "Total": 2, "Percentage": 67},
-            "Melodi Myers": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
-            "Lulu": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 0, "Total": 2, "Percentage": 67},
-            "August": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
-            "Mehtun Nissa": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100}
+            "Student A": {"Q1_8cubes": 1, "Q2_6cubes": 0, "Q3_morecubes": 1, "Total": 2, "Percentage": 67},
+            "Student B": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
+            "Student C": {"Q1_8cubes": 0, "Q2_6cubes": 0, "Q3_morecubes": 0, "Total": 0, "Percentage": 0},
+            "Student D": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 0, "Total": 2, "Percentage": 67},
+            "Student E": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
+            "Student F": {"Q1_8cubes": 1, "Q2_6cubes": 0, "Q3_morecubes": 1, "Total": 2, "Percentage": 67},
+            "Student G": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
+            "Student H": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 0, "Total": 2, "Percentage": 67},
+            "Student I": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100},
+            "Student J": {"Q1_8cubes": 1, "Q2_6cubes": 1, "Q3_morecubes": 1, "Total": 3, "Percentage": 100}
         };
         
         let selectedStudent = null;
@@ -519,7 +519,7 @@
             
             // General responses
             if (message.includes('intervention') || message.includes('help') || message.includes('support')) {
-                return "I can help with intervention strategies! Ask about a specific student (like 'How can I help Ava?') or ask about general counting interventions.";
+                return "I can help with intervention strategies! Ask about a specific student (like 'How can I help Student C?') or ask about general counting interventions.";
             }
             
             if (message.includes('counting') || message.includes('cubes')) {
@@ -530,7 +530,7 @@
                 return "I can analyze any student's performance! Select a student from the left panel to see their details, or ask me about a specific student by name.";
             }
             
-            return "I'm here to help with student interventions! Try asking about a specific student (like 'What does Ava need?') or ask about counting strategies.";
+            return "I'm here to help with student interventions! Try asking about a specific student (like 'What does Student C need?') or ask about counting strategies.";
         }
         
         function generateStudentSpecificResponse(name, data, message) {
