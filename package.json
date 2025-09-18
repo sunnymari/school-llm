@@ -1,0 +1,30 @@
+{
+  "name": "school-llm",
+  "version": "1.0.0",
+  "description": "AI-powered math assessment system with Streamlit dashboard and FastAPI backend",
+  "main": "main.py",
+  "scripts": {
+    "start": "python main.py",
+    "dev": "uvicorn main:app --reload --port 8000",
+    "build": "echo 'Build completed'",
+    "vercel-build": "echo 'Vercel build completed'"
+  },
+  "keywords": [
+    "education",
+    "assessment",
+    "ai",
+    "machine-learning",
+    "streamlit",
+    "fastapi",
+    "math",
+    "counting"
+  ],
+  "author": "sunnymari",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "python": "^3.9.0"
+  }
+}
